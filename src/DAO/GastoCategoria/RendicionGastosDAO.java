@@ -30,7 +30,7 @@ public class RendicionGastosDAO {
                         rs.getString("num_comprobante"),
                         rs.getString("descripcion_gasto"),
                         rs.getDouble("monto"),
-                        parseDate(rs.getString("fecha_gasto")),  // Lee como cadena y convierte
+                        parseDate(rs.getString("fecha_gasto")),
                         rs.getInt("usuario_id")
                 );
                 listaGastos.add(gasto);
@@ -43,14 +43,13 @@ public class RendicionGastosDAO {
         return listaGastos;
     }
 
-    // Método para convertir la fecha de cadena a java.sql.Date
     private java.sql.Date parseDate(String fecha) {
         try {
             return new java.sql.Date(DATE_FORMAT.parse(fecha).getTime());
         } catch (ParseException e) {
             System.err.println("Error al parsear la fecha: " + fecha);
             e.printStackTrace();
-            return null;  // Retorna null o maneja el error de otra manera
+            return null;
         }
     }
 
@@ -70,7 +69,7 @@ public class RendicionGastosDAO {
                             rs.getString("num_comprobante"),
                             rs.getString("descripcion_gasto"),
                             rs.getDouble("monto"),
-                            parseDate(rs.getString("fecha_gasto")),  // Lee como cadena y convierte
+                            parseDate(rs.getString("fecha_gasto")),
                             rs.getInt("usuario_id")
                     );
                     listaGastos.add(gasto);

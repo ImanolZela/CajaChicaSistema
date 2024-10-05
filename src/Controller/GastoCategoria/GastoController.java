@@ -27,7 +27,7 @@ public class GastoController {
     }
 
     public List<Rendicion_Gastos> filtrarPorCategoria(int categoriaId) {
-        Connection conn = Conexion.conectar(); // Abrir la conexión
+        Connection conn = Conexion.conectar();
         List<Rendicion_Gastos> lista = gastosDAO.filtrarGastosPorCategoria(conn, categoriaId);
         Conexion.desconectar(); 
         return lista;
@@ -75,7 +75,7 @@ public class GastoController {
             }
             listaGastos.set(j + 1, key);
         }
-        return listaGastos;  // Devolver la lista ordenada por categoría
+        return listaGastos;
     }
 
     public int obtenerIdCategoria(String nombreCategoria) {

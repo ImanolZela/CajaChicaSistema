@@ -16,9 +16,9 @@ public class JFClasificarGasto extends javax.swing.JFrame {
     public JFClasificarGasto() {
         initComponents();
         
-        modeloTabla = new DefaultTableModel(new Object[]{"ID", "Descripción", "Monto", "Fecha", "Categoría"}, 0); // Inicializar la tabla
-        cargarDatosTabla.setModel(modeloTabla);  // Asociar el modelo a la tabla
-        cargarDatosTabla(gastoController.obtenerTodosLosGastos());  // Cargar los datos iniciales
+        modeloTabla = new DefaultTableModel(new Object[]{"ID", "Descripción", "Monto", "Fecha", "Categoría"}, 0);
+        cargarDatosTabla.setModel(modeloTabla);
+        cargarDatosTabla(gastoController.obtenerTodosLosGastos()); 
     }
     
     
@@ -113,7 +113,7 @@ public class JFClasificarGasto extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     private void cargarDatosTabla(List<Rendicion_Gastos> listaGastos) {
-        modeloTabla.setRowCount(0);  // Limpiar la tabla
+        modeloTabla.setRowCount(0);
 
         for (Rendicion_Gastos gasto : listaGastos) {
             modeloTabla.addRow(new Object[]{
@@ -126,7 +126,7 @@ public class JFClasificarGasto extends javax.swing.JFrame {
         }
     }
     private void cbFiltroCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFiltroCategoriaActionPerformed
-        // Si selecciona "Categoría", habilitar el ComboBox de categorías
+
         if ("Categoria".equals(cbFiltroCategoria.getSelectedItem().toString())) {
             cbSeleccionCategoria.setEnabled(true);
         } else {
@@ -141,13 +141,11 @@ public class JFClasificarGasto extends javax.swing.JFrame {
     }//GEN-LAST:event_btnFiltroActionPerformed
 
     private void btnGenerarReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarReporteActionPerformed
-        // Obtener los datos filtrados o los datos de la tabla completa
+
         List<Rendicion_Gastos> listaGastos = gastoController.obtenerTodosLosGastos();
 
-        // Crear instancia del reporte
         ReporteGastosPDF reportePDF = new ReporteGastosPDF();
 
-        // Generar el reporte
         reportePDF.generarReporte(listaGastos);
     }//GEN-LAST:event_btnGenerarReporteActionPerformed
 
