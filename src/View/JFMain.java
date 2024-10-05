@@ -1,7 +1,7 @@
 
 package View;
 
-import Class.Conexion;
+import Model.Conexion;
 
 public class JFMain extends javax.swing.JFrame {
 

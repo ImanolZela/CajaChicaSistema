@@ -1,8 +1,7 @@
 
-package Class;
+package Model;
 
 
-import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -10,7 +9,7 @@ import java.sql.SQLException;
 
 public class Conexion {
     private static Connection conn = null;
-    private static String url = "jdbc:sqlite:D:/ProyectoAlgoritmos/CajaChicaSistema/src/sistemacajachica.sqlite";
+    private static String url = "jdbc:sqlite:bd/sistemacajachica.sqlite";
     private static String driver = "org.sqlite.JDBC";
 
     public static Connection conectar() {
