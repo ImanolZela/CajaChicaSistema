@@ -14,7 +14,7 @@ public class Conexion {
 
     public static Connection conectar() {
         try {
-            if (conn == null) {
+            if (conn == null || conn.isClosed()) {
                 Class.forName(driver);
                 conn = DriverManager.getConnection(url);
                 System.out.println("Conexión establecida a la base de datos SQLite");
@@ -23,12 +23,11 @@ public class Conexion {
             System.out.println("Error al conectar a la base de datos: " + e.getMessage());
         }
         return conn;
-        
     }
-    
+
     public static void desconectar() {
         try {
-            if (conn != null) {
+            if (conn != null && !conn.isClosed()) {
                 conn.close();
                 System.out.println("Conexión cerrada");
             }

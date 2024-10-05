@@ -1,14 +1,27 @@
 
 package View.GastoCategoria;
 
+import Controller.GastoCategoria.GastoController;
+import DAO.GastoCategoria.ReporteGastosPDF;
+import Model.Rendicion_Gastos;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 public class JFClasificarGasto extends javax.swing.JFrame {
 
-    /**
-     * Creates new form JFClasificarGasto
-     */
+        GastoController gastoController = new GastoController(); 
+     private DefaultTableModel modeloTabla;
+     private List<Rendicion_Gastos> listaFiltradaActual; 
+    
     public JFClasificarGasto() {
         initComponents();
+        
+        modeloTabla = new DefaultTableModel(new Object[]{"ID", "Descripción", "Monto", "Fecha", "Categoría"}, 0); // Inicializar la tabla
+        cargarDatosTabla.setModel(modeloTabla);  // Asociar el modelo a la tabla
+        cargarDatosTabla(gastoController.obtenerTodosLosGastos());  // Cargar los datos iniciales
     }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -20,13 +33,15 @@ public class JFClasificarGasto extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        cargarDatosTabla = new javax.swing.JTable();
         cbFiltroCategoria = new javax.swing.JComboBox<>();
         btnFiltro = new javax.swing.JButton();
+        cbSeleccionCategoria = new javax.swing.JComboBox<>();
+        btnGenerarReporte = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        cargarDatosTabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -37,7 +52,7 @@ public class JFClasificarGasto extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(cargarDatosTabla);
 
         cbFiltroCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Filtrar por ...", "Categoria", "Precio" }));
         cbFiltroCategoria.addActionListener(new java.awt.event.ActionListener() {
@@ -47,6 +62,20 @@ public class JFClasificarGasto extends javax.swing.JFrame {
         });
 
         btnFiltro.setText("Filtrar");
+        btnFiltro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFiltroActionPerformed(evt);
+            }
+        });
+
+        cbSeleccionCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione ...", "Alimentacion", "Transporte", "Hospedaje", "Otros", " " }));
+
+        btnGenerarReporte.setText("Generar Reporte");
+        btnGenerarReporte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGenerarReporteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -55,9 +84,12 @@ public class JFClasificarGasto extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(59, 59, 59)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnGenerarReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 750, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(cbFiltroCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(cbSeleccionCategoria, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbFiltroCategoria, javax.swing.GroupLayout.Alignment.LEADING, 0, 147, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnFiltro)))
                 .addContainerGap(62, Short.MAX_VALUE))
@@ -66,20 +98,58 @@ public class JFClasificarGasto extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(28, 28, 28)
+                .addComponent(cbFiltroCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbFiltroCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbSeleccionCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnFiltro))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(69, 69, 69))
+                .addGap(18, 18, 18)
+                .addComponent(btnGenerarReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    private void cargarDatosTabla(List<Rendicion_Gastos> listaGastos) {
+        modeloTabla.setRowCount(0);  // Limpiar la tabla
 
+        for (Rendicion_Gastos gasto : listaGastos) {
+            modeloTabla.addRow(new Object[]{
+                    gasto.getRendicion_id(),
+                    gasto.getDescripcion_gasto(),
+                    gasto.getMonto(),
+                    gasto.getFecha_gasto(),
+                    gasto.getCategoria_id()
+            });
+        }
+    }
     private void cbFiltroCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFiltroCategoriaActionPerformed
-        // TODO add your handling code here:
+        // Si selecciona "Categoría", habilitar el ComboBox de categorías
+        if ("Categoria".equals(cbFiltroCategoria.getSelectedItem().toString())) {
+            cbSeleccionCategoria.setEnabled(true);
+        } else {
+            cbSeleccionCategoria.setEnabled(false);
+        }
     }//GEN-LAST:event_cbFiltroCategoriaActionPerformed
+
+    private void btnFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltroActionPerformed
+        String filtroSeleccionado = cbFiltroCategoria.getSelectedItem().toString();
+        List<Rendicion_Gastos> listaFiltrada = gastoController.procesarFiltrado(filtroSeleccionado, cbSeleccionCategoria.getSelectedItem().toString());
+        cargarDatosTabla(listaFiltrada);
+    }//GEN-LAST:event_btnFiltroActionPerformed
+
+    private void btnGenerarReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarReporteActionPerformed
+        // Obtener los datos filtrados o los datos de la tabla completa
+        List<Rendicion_Gastos> listaGastos = gastoController.obtenerTodosLosGastos();
+
+        // Crear instancia del reporte
+        ReporteGastosPDF reportePDF = new ReporteGastosPDF();
+
+        // Generar el reporte
+        reportePDF.generarReporte(listaGastos);
+    }//GEN-LAST:event_btnGenerarReporteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -118,8 +188,10 @@ public class JFClasificarGasto extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnFiltro;
+    private javax.swing.JButton btnGenerarReporte;
+    private javax.swing.JTable cargarDatosTabla;
     private javax.swing.JComboBox<String> cbFiltroCategoria;
+    private javax.swing.JComboBox<String> cbSeleccionCategoria;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }
