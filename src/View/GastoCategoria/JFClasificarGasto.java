@@ -47,6 +47,11 @@ public class JFClasificarGasto extends javax.swing.JFrame {
         });
 
         btnFiltro.setText("Filtrar");
+        btnFiltro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFiltroActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -80,6 +85,10 @@ public class JFClasificarGasto extends javax.swing.JFrame {
     private void cbFiltroCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFiltroCategoriaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbFiltroCategoriaActionPerformed
+
+    private void btnFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnFiltroActionPerformed
 
     /**
      * @param args the command line arguments

@@ -2,15 +2,20 @@
 package View;
 
 import Model.Conexion;
+import View.GastoCategoria.JFClasificarGasto;
+import View.VerSaldo.JFVerSaldo;
 
 public class JFMain extends javax.swing.JFrame {
 
-    /**
-     * Creates new form JFMain
-     */
+    private JFClasificarGasto jfClasificarGasto;
+    private JFVerSaldo jfVerSaldo;
+    
+    
     public JFMain() {
         initComponents();
         Conexion.conectar();
+        this.jfClasificarGasto = new JFClasificarGasto();
+        this.jfVerSaldo = new JFVerSaldo();
         
     }
 
@@ -23,21 +28,56 @@ public class JFMain extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnClasificarGasto = new javax.swing.JButton();
+        btnVerSaldo = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        btnClasificarGasto.setText("Clasificar Gasto");
+        btnClasificarGasto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClasificarGastoActionPerformed(evt);
+            }
+        });
+
+        btnVerSaldo.setText("Ver saldo");
+        btnVerSaldo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerSaldoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 652, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(249, 249, 249)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnClasificarGasto, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+                    .addComponent(btnVerSaldo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(263, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 479, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(161, Short.MAX_VALUE)
+                .addComponent(btnClasificarGasto)
+                .addGap(29, 29, 29)
+                .addComponent(btnVerSaldo)
+                .addGap(243, 243, 243))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnClasificarGastoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClasificarGastoActionPerformed
+        jfClasificarGasto.setVisible(true);
+    }//GEN-LAST:event_btnClasificarGastoActionPerformed
+
+    private void btnVerSaldoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerSaldoActionPerformed
+        jfVerSaldo.setVisible(true);
+    }//GEN-LAST:event_btnVerSaldoActionPerformed
     
     /**
      * @param args the command line arguments
@@ -75,5 +115,7 @@ public class JFMain extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnClasificarGasto;
+    private javax.swing.JButton btnVerSaldo;
     // End of variables declaration//GEN-END:variables
 }
