@@ -22,10 +22,12 @@ public class Conexion {
             }
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println("Error al conectar a la base de datos: " + e.getMessage());
+            System.out.println("Dylan chupa rata");
         }
         return conn;
+        
     }
-
+    
     public static void desconectar() {
         try {
             if (conn != null) {
