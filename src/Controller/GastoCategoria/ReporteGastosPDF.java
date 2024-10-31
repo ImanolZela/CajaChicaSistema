@@ -15,7 +15,7 @@ import java.text.SimpleDateFormat;
 public class ReporteGastosPDF {
       public void generarReporte(List<Rendicion_Gastos> listaGastos) {
           
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy_MM_dd-HH_mm");
         String fechaHoraActual = dateFormat.format(new Date());
         
          String rutaArchivo = "reportes/Reporte_Gastos_" + fechaHoraActual + ".pdf";
