@@ -2,7 +2,7 @@
 package View.GastoCategoria;
 
 import Controller.GastoCategoria.GastoController;
-import DAO.GastoCategoria.ReporteGastosPDF;
+import Controller.GastoCategoria.ReporteGastosPDF;
 import Model.Rendicion_Gastos;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
@@ -18,7 +18,9 @@ public class JFClasificarGasto extends javax.swing.JFrame {
         
         modeloTabla = new DefaultTableModel(new Object[]{"ID", "Descripción", "Monto", "Fecha", "Categoría"}, 0);
         cargarDatosTabla.setModel(modeloTabla);
-        cargarDatosTabla(gastoController.obtenerTodosLosGastos()); 
+        cargarDatosTabla(gastoController.obtenerTodosLosGastos());
+        cbSeleccionCategoria.setEnabled(false);
+        btnRestarOrden.setEnabled(false);
     }
     
     
@@ -38,6 +40,7 @@ public class JFClasificarGasto extends javax.swing.JFrame {
         btnFiltro = new javax.swing.JButton();
         cbSeleccionCategoria = new javax.swing.JComboBox<>();
         btnGenerarReporte = new javax.swing.JButton();
+        btnRestarOrden = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -77,6 +80,13 @@ public class JFClasificarGasto extends javax.swing.JFrame {
             }
         });
 
+        btnRestarOrden.setText("Deshacer Cambios");
+        btnRestarOrden.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRestarOrdenActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -91,7 +101,9 @@ public class JFClasificarGasto extends javax.swing.JFrame {
                             .addComponent(cbSeleccionCategoria, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(cbFiltroCategoria, javax.swing.GroupLayout.Alignment.LEADING, 0, 147, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnFiltro)))
+                        .addComponent(btnFiltro)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnRestarOrden)))
                 .addContainerGap(62, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -102,7 +114,8 @@ public class JFClasificarGasto extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbSeleccionCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnFiltro))
+                    .addComponent(btnFiltro)
+                    .addComponent(btnRestarOrden))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -131,23 +144,79 @@ public class JFClasificarGasto extends javax.swing.JFrame {
             cbSeleccionCategoria.setEnabled(true);
         } else {
             cbSeleccionCategoria.setEnabled(false);
+            cbSeleccionCategoria.setSelectedIndex(0);
         }
     }//GEN-LAST:event_cbFiltroCategoriaActionPerformed
 
     private void btnFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltroActionPerformed
         String filtroSeleccionado = cbFiltroCategoria.getSelectedItem().toString();
-        List<Rendicion_Gastos> listaFiltrada = gastoController.procesarFiltrado(filtroSeleccionado, cbSeleccionCategoria.getSelectedItem().toString());
-        cargarDatosTabla(listaFiltrada);
+        
+        if ("Filtrar por ...".equals(filtroSeleccionado)) {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+            "Por favor, seleccione una opción de filtro (Categoría o Precio) antes de filtrar.", 
+            "Filtro no seleccionado", 
+            javax.swing.JOptionPane.WARNING_MESSAGE);
+            return; 
+        }
+        
+        if ("Categoria".equals(filtroSeleccionado) && "Seleccione ...".equals(cbSeleccionCategoria.getSelectedItem().toString())) {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+            "Por favor, seleccione una categoría específica antes de filtrar.", 
+            "Categoría no seleccionada", 
+            javax.swing.JOptionPane.WARNING_MESSAGE);
+            return; 
+        }
+        
+            listaFiltradaActual = gastoController.procesarFiltrado(filtroSeleccionado, cbSeleccionCategoria.getSelectedItem().toString());
+            cargarDatosTabla(listaFiltradaActual);
+        
+        btnRestarOrden.setEnabled(true);
     }//GEN-LAST:event_btnFiltroActionPerformed
 
     private void btnGenerarReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarReporteActionPerformed
+        // Comprobar si la tabla tiene datos visibles
+        if (cargarDatosTabla.getRowCount() == 0) {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "No hay datos disponibles en la tabla para generar el reporte.", 
+                "Tabla Vacía", 
+                javax.swing.JOptionPane.WARNING_MESSAGE);
+            return; // Salimos del método sin generar el reporte
+        }
 
-        List<Rendicion_Gastos> listaGastos = gastoController.obtenerTodosLosGastos();
+        // Determinamos los datos para el reporte
+        List<Rendicion_Gastos> datosParaReporte;
+        if (listaFiltradaActual == null || listaFiltradaActual.isEmpty()) {
+            datosParaReporte = gastoController.obtenerTodosLosGastos();
+        } else {
+            datosParaReporte = listaFiltradaActual;
+        }
 
+        // Generar el reporte PDF si hay datos disponibles
         ReporteGastosPDF reportePDF = new ReporteGastosPDF();
+        reportePDF.generarReporte(datosParaReporte);
 
-        reportePDF.generarReporte(listaGastos);
+        javax.swing.JOptionPane.showMessageDialog(this, 
+            "El reporte PDF ha sido generado exitosamente.", 
+            "Reporte Generado", 
+            javax.swing.JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnGenerarReporteActionPerformed
+
+    private void btnRestarOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestarOrdenActionPerformed
+        List<Rendicion_Gastos> listaOriginal = gastoController.obtenerTodosLosGastos();
+        cargarDatosTabla(listaOriginal);
+        
+        cbFiltroCategoria.setSelectedIndex(0);
+        cbSeleccionCategoria.setSelectedIndex(0);
+        cbSeleccionCategoria.setEnabled(false);
+        
+        btnRestarOrden.setEnabled(false);
+                
+        javax.swing.JOptionPane.showMessageDialog(this, 
+            "El orden original ha sido restaurado.", 
+            "Orden Restaurado", 
+        javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        
+    }//GEN-LAST:event_btnRestarOrdenActionPerformed
 
     /**
      * @param args the command line arguments
@@ -187,6 +256,7 @@ public class JFClasificarGasto extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnFiltro;
     private javax.swing.JButton btnGenerarReporte;
+    private javax.swing.JButton btnRestarOrden;
     private javax.swing.JTable cargarDatosTabla;
     private javax.swing.JComboBox<String> cbFiltroCategoria;
     private javax.swing.JComboBox<String> cbSeleccionCategoria;

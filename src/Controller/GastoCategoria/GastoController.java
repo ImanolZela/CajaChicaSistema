@@ -2,7 +2,6 @@
 package Controller.GastoCategoria;
 
 import DAO.GastoCategoria.RendicionGastosDAO;
-import DAO.GastoCategoria.ReporteGastosPDF;
 import Model.Rendicion_Gastos;
 import Model.Conexion;
 
@@ -21,9 +20,11 @@ public class GastoController {
    
     public List<Rendicion_Gastos> obtenerTodosLosGastos() {
         Connection conn = Conexion.conectar();
-        List<Rendicion_Gastos> lista = gastosDAO.obtenerTodosLosGastos(conn);
-        Conexion.desconectar();
-        return lista;
+        try {
+            return gastosDAO.obtenerTodosLosGastos(conn);
+        } finally {
+            Conexion.desconectar();
+        }
     }
 
     public List<Rendicion_Gastos> filtrarPorCategoria(int categoriaId) {
