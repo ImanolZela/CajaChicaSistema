@@ -2,17 +2,17 @@
 package View.ReporteDeGasto;
 
 
-import Controller.ReporteDeGasto.ReporteDeGastoController;
+import Controller.ReporteDeGasto.ReporteDeGastoPorProyectoController;
 
 import Controller.VerSaldo.VerSaldoController;
 
 public class JFReporteDeGastoPorProyecto extends javax.swing.JFrame {
-    ReporteDeGastoController gastoController = new ReporteDeGastoController();
+    ReporteDeGastoPorProyectoController gastoController = new ReporteDeGastoPorProyectoController();
     
     public JFReporteDeGastoPorProyecto() {
         
         initComponents();
-        ReporteDeGastoController.cargarProyectosInCB(cbProyectos);
+        ReporteDeGastoPorProyectoController.cargarProyectosInCB(cbProyectos);
         
         
     }
@@ -93,7 +93,7 @@ public class JFReporteDeGastoPorProyecto extends javax.swing.JFrame {
   
     private void cbProyectosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbProyectosActionPerformed
         // Verifica si hay un elemento seleccionado en el ComboBox
-        ReporteDeGastoController.cargarDatosProyecto(cbProyectos, tfGastoTotal, taDescripcion);
+        ReporteDeGastoPorProyectoController.cargarDatosProyecto(cbProyectos, tfGastoTotal, taDescripcion);
     }//GEN-LAST:event_cbProyectosActionPerformed
 
     

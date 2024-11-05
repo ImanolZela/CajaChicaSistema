@@ -17,7 +17,7 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 
-public class ReporteDeGastoController {
+public class ReporteDeGastoPorProyectoController {
     public static void cargarProyectosInCB(JComboBox<String> cb) {
         cb.removeAllItems();
         List<String> proyectos = obtenerProyectos();
