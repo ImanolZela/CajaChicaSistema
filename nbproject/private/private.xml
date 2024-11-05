@@ -3,11 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/ProyectoAlgoritmos/CajaChicaSistema/src/Controller/GastoCategoria/GastoController.java</file>
-            <file>file:/D:/ProyectoAlgoritmos/CajaChicaSistema/src/DAO/GastoCategoria/ReporteGastosPDF.java</file>
-            <file>file:/D:/ProyectoAlgoritmos/CajaChicaSistema/src/DAO/GastoCategoria/RendicionGastosDAO.java</file>
-            <file>file:/D:/ProyectoAlgoritmos/CajaChicaSistema/src/View/GastoCategoria/JFClasificarGasto.java</file>
-            <file>file:/D:/ProyectoAlgoritmos/CajaChicaSistema/src/Controller/VerSaldo/VerSaldoController.java</file>
+            <file>file:/D:/UTP_CicloActual/AlgoritmosYEstructuraDeDatos/CajaChicaSistema/src/DAO/ReporteDeGasto/ReporteDeGastoProyectoDAO.java</file>
+            <file>file:/D:/UTP_CicloActual/AlgoritmosYEstructuraDeDatos/CajaChicaSistema/src/View/ReporteDeGasto/JFReporteDeGastoPorProyecto.java</file>
+            <file>file:/D:/UTP_CicloActual/AlgoritmosYEstructuraDeDatos/CajaChicaSistema/src/Controller/ReporteDeGasto/ReporteDeGastoController.java</file>
         </group>
     </open-files>
 </project-private>
