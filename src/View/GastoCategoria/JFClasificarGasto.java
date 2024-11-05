@@ -4,6 +4,7 @@ package View.GastoCategoria;
 import Controller.GastoCategoria.GastoController;
 import Controller.GastoCategoria.ReporteGastosPDF;
 import Model.Rendicion_Gastos;
+import java.io.File;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -174,24 +175,22 @@ public class JFClasificarGasto extends javax.swing.JFrame {
     }//GEN-LAST:event_btnFiltroActionPerformed
 
     private void btnGenerarReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarReporteActionPerformed
-        // Comprobar si la tabla tiene datos visibles
+
         if (cargarDatosTabla.getRowCount() == 0) {
             javax.swing.JOptionPane.showMessageDialog(this, 
                 "No hay datos disponibles en la tabla para generar el reporte.", 
                 "Tabla Vacía", 
                 javax.swing.JOptionPane.WARNING_MESSAGE);
-            return; // Salimos del método sin generar el reporte
+            return; 
         }
 
-        // Determinamos los datos para el reporte
         List<Rendicion_Gastos> datosParaReporte;
         if (listaFiltradaActual == null || listaFiltradaActual.isEmpty()) {
             datosParaReporte = gastoController.obtenerTodosLosGastos();
         } else {
             datosParaReporte = listaFiltradaActual;
         }
-
-        // Generar el reporte PDF si hay datos disponibles
+ 
         ReporteGastosPDF reportePDF = new ReporteGastosPDF();
         reportePDF.generarReporte(datosParaReporte);
 
@@ -199,6 +198,24 @@ public class JFClasificarGasto extends javax.swing.JFrame {
             "El reporte PDF ha sido generado exitosamente.", 
             "Reporte Generado", 
             javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        
+        try{
+            File directorio = new File("reportes");
+            
+            if(directorio.exists()){
+                java.awt.Desktop.getDesktop().open(directorio);               
+            }else{
+                javax.swing.JOptionPane.showMessageDialog(this, 
+                    "No se pudo abrir la carpeta de reportes.", 
+                    "Error al abrir carpeta", 
+                javax.swing.JOptionPane.ERROR_MESSAGE);
+            }         
+        }catch(Exception e){
+             javax.swing.JOptionPane.showMessageDialog(this, 
+            "Error al intentar abrir la carpeta de reportes: " + e.getMessage(), 
+            "Error", 
+            javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnGenerarReporteActionPerformed
 
     private void btnRestarOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestarOrdenActionPerformed
