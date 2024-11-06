@@ -1,6 +1,5 @@
 package DAO.ReporteDeGasto;
 
-
 import Model.Conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,76 +7,127 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JComboBox;
 
 public class ReporteDeGastoAuditorDAO {
     
-    public List<String> obtenerGastosPorProyecto(Connection con, String nombre_caja) {
-        //Retorna una lista con el 
-        //nombre del proyecto, descripcion, gastoTotal
-        List<String> gasto = new ArrayList<>();
+    public List<String> obtenerSumaTotalGastosPorAuditor(Connection con) {
+        List<String> gastos = new ArrayList<>();
         
         String sql = """
             SELECT 
-                cc.nombre_proyecto AS nombre_proyecto,
-                SUM(rg.monto) AS gasto_total,
-                rg.descripcion_gasto AS descripcion
-                
+                u.nombres || ' ' || u.apellidos AS nombre_Auditor,
+                SUM(rg.monto) AS total_gasto
             FROM 
-                Caja_Chica cc
+                Rendicion_Gastos rg
             JOIN 
-                Movimientos_Caja_Chica mcc ON mcc.caja_id = cc.caja_id
-            JOIN 
-                Rendicion_Gastos rg ON rg.caja_id = cc.caja_id
-            JOIN 
-                Categorias_Gasto cg ON rg.categoria_id = cg.categoria_id
-            WHERE 
-                nombre_proyecto = ? AND mcc.tipo_movimiento = 0
+                Usuarios u ON rg.usuario_id = u.usuario_id
             GROUP BY 
-                cc.caja_id
+                u.usuario_id;
         """;
-        //En caso se quiera filtrar por id: rg.caja_id = ?
 
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setString(1, nombre_caja);
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    gasto = new ArrayList<>();
-                    gasto.add(rs.getString("nombre_proyecto"));
-                    gasto.add(String.valueOf(rs.getDouble("gasto_total")));
-                    gasto.add(rs.getString("descripcion"));
-                }
-            }
-        } catch (SQLException e) {
-            System.out.println("Dato-ObtenerGastoPorProyecto-Error al obtener los gastos por proyecto: " + e.getMessage());
-        }
-
-        return gasto;
-    }
-    
-       
-    
-    public static List<String> obtenerProyectos() {
-        List<String> proyectos = new ArrayList<>();
-        String sql = "SELECT nombre_proyecto FROM Caja_Chica";
-
-        try (Connection conn = Conexion.conectar();
-             PreparedStatement pstmt = conn.prepareStatement(sql);
-             ResultSet rs = pstmt.executeQuery()) {
+        try (PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
-                String nombreProyecto = rs.getString("nombre_proyecto");
-                System.out.println("Proyecto encontrado en BD: " + nombreProyecto);
-                proyectos.add(nombreProyecto);
+                String auditor = rs.getString("nombre_Auditor");
+                String totalGasto = String.valueOf(rs.getDouble("total_gasto"));
+                gastos.add(auditor + " - Total Gasto: " + totalGasto);
             }
         } catch (SQLException e) {
-            System.out.println("ObtenerProyectos,Error al obtener los proyectos: " + e.getMessage());
+            System.out.println("Error al obtener la suma total de gastos por auditor: " + e.getMessage());
         }
-        return proyectos;
+
+        return gastos;
+    }
+    
+    public List<String> obtenerPromedioGastosPorAuditor(Connection con) {
+        List<String> gastos = new ArrayList<>();
+        
+        String sql = """
+            SELECT 
+                u.nombres || ' ' || u.apellidos AS nombre_Auditor,
+                AVG(rg.monto) AS promedio_gasto
+            FROM 
+                Rendicion_Gastos rg
+            JOIN 
+                Usuarios u ON rg.usuario_id = u.usuario_id
+            GROUP BY 
+                u.usuario_id;
+        """;
+
+        try (PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                String auditor = rs.getString("nombre_Auditor");
+                String promedioGasto = String.valueOf(rs.getDouble("promedio_gasto"));
+                gastos.add(auditor + " - Promedio Gasto: " + promedioGasto);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener el promedio de gastos por auditor: " + e.getMessage());
+        }
+
+        return gastos;
     }
 
-    
 
+    public List<String> obtenerCantidadGastosPorAuditor(Connection con) {
+        List<String> gastos = new ArrayList<>();
+        
+        String sql = """
+            SELECT 
+                u.nombres || ' ' || u.apellidos AS nombre_Auditor,
+                COUNT(rg.monto) AS cantidad_gastos
+            FROM 
+                Rendicion_Gastos rg
+            JOIN 
+                Usuarios u ON rg.usuario_id = u.usuario_id
+            GROUP BY 
+                u.usuario_id;
+        """;
+
+        try (PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                String auditor = rs.getString("nombre_Auditor");
+                String cantidadGastos = String.valueOf(rs.getInt("cantidad_gastos"));
+                gastos.add(auditor + " - Cantidad de Gastos: " + cantidadGastos);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener la cantidad de gastos por auditor: " + e.getMessage());
+        }
+
+        return gastos;
+    }
+
+
+    public List<String> obtenerListaAuditores(Connection con) {
+        List<String> auditores = new ArrayList<>();
+
+        String sql =  """
+            SELECT 
+                u.nombres || ' ' || u.apellidos AS nombre_Auditor
+            FROM 
+                Usuarios u
+            JOIN 
+                Roles r ON u.rol_id = r.rol_id
+            WHERE 
+                r.nombre_rol = 'Auditor';
+        """;
+                         
+        try (PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+                      
+            while (rs.next()) {
+                String nombreAuditor = rs.getString("nombre_Auditor");
+                auditores.add(nombreAuditor);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener la lista de auditores: " + e.getMessage());
+        }        
+
+        return auditores;
+    }
 
 }
-

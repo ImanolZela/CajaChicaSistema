@@ -1,62 +1,77 @@
 package Controller.ReporteDeGasto;
 
-
-import Controller.VerSaldo.VerSaldoController;
-import DAO.ReporteDeGasto.ReporteDeGastoProyectoDAO;
-import static DAO.ReporteDeGasto.ReporteDeGastoProyectoDAO.obtenerProyectos;
+import DAO.ReporteDeGasto.ReporteDeGastoAuditorDAO;
 import Model.Conexion;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JComboBox;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.table.DefaultTableModel;
-
 
 public class ReporteDeGastoPorAuditorController {
-    public static void cargarProyectosInCB(JComboBox<String> cb) {
-        cb.removeAllItems();
-        List<String> proyectos = obtenerProyectos();
 
-        if (proyectos.isEmpty()) {
-            System.out.println("No se encontraron proyectos activos.");
+    public static void cargarAuditoresEnCB(JComboBox<String> cbAuditor) {
+        cbAuditor.removeAllItems();
+        Connection conn = Conexion.conectar();
+        ReporteDeGastoAuditorDAO dao = new ReporteDeGastoAuditorDAO();
+        List<String> auditores = dao.obtenerListaAuditores(conn);
+        System.out.println(auditores);
+        if (auditores.isEmpty()) {
+            System.out.println("No se encontraron auditores.");
         } else {
-            for (String proyecto : proyectos) {
-                cb.addItem(proyecto);
-                System.out.println("Proyecto cargado: " + proyecto);
+            for (String auditor : auditores) {
+                cbAuditor.addItem(auditor);
+                System.out.println("Auditor cargado: " + auditor);
             }
         }
     }
-    
-    
-    public static void cargarDatosProyecto(JComboBox<String> cb, JTextField tfGastoTotal, JTextArea taDescripcion) {
-        Connection conn = Conexion.conectar();
-        ReporteDeGastoProyectoDAO dao = new ReporteDeGastoProyectoDAO();
-        List<String> datos = new ArrayList<>();
-        try {
-            if (cb.getSelectedItem() != null) {
-                String proyectoSeleccionado = cb.getSelectedItem().toString();
-                datos = dao.obtenerGastosPorProyecto(conn, proyectoSeleccionado);
-                
 
+    public static void cargarOpcionesEnCB(JComboBox<String> cbOpcion) {
+        cbOpcion.removeAllItems();
+        cbOpcion.addItem("Suma Total");
+        cbOpcion.addItem("Promedio");
+        cbOpcion.addItem("Cantidad");
+    }
+
+
+    public static void mostrarResultadoSeleccionado(JComboBox<String> cbAuditor, JComboBox<String> cbOpcion, JTextField tfGastoTotal) {
+        Connection conn = Conexion.conectar();
+        ReporteDeGastoAuditorDAO dao = new ReporteDeGastoAuditorDAO();
+        List<String> resultado = new ArrayList<>();
+        
+        try {
+            if (cbAuditor.getSelectedItem() != null && cbOpcion.getSelectedItem() != null) {
+                String auditorSeleccionado = cbAuditor.getSelectedItem().toString();
+                String opcionSeleccionada = cbOpcion.getSelectedItem().toString();
+
+                switch (opcionSeleccionada) {
+                    case "Suma Total":
+                        resultado = dao.obtenerSumaTotalGastosPorAuditor(conn);
+                        break;
+                    case "Promedio":
+                        resultado = dao.obtenerPromedioGastosPorAuditor(conn);
+                        break;
+                    case "Cantidad":
+                        resultado = dao.obtenerCantidadGastosPorAuditor(conn);
+                        break;
+                    default:
+                        System.out.println("Opción no válida.");
+                        break;
+                }
+
+                for (String res : resultado) {
+                    if (res.contains(auditorSeleccionado)) {
+                        tfGastoTotal.setText(res.split(": ")[1]);
+                        break;
+                    }
+                }
+                
             } else {
-                System.out.println("No se ha seleccionado ningún proyecto");
-            }
-            
-            if (datos.size() >= 2) {
-                tfGastoTotal.setText(datos.get(1));
-                taDescripcion.setText(datos.get(2));
-            } else {
-                System.out.println("La lista de datos no contiene suficientes elementos.");
+                System.out.println("No se ha seleccionado ningún auditor u opción.");
             }
     
         } finally {
             Conexion.desconectar();
         }
     }
-    
 }

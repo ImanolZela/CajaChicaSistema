@@ -3,6 +3,7 @@ package View;
 
 import Model.Conexion;
 import View.GastoCategoria.JFClasificarGasto;
+import View.ReporteDeGasto.JFReporteDeGastoPorAuditor;
 import View.ReporteDeGasto.JFReporteDeGastoPorProyecto;
 import View.VerSaldo.JFVerSaldo;
 
@@ -11,6 +12,8 @@ public class JFMain extends javax.swing.JFrame {
     private JFClasificarGasto jfClasificarGasto;
     private JFVerSaldo jfVerSaldo;
     private JFReporteDeGastoPorProyecto jfReporteDeGastoPorProyecto;
+    private JFReporteDeGastoPorAuditor jfReporteDeGastoPorAuditor;
+    
     
     public JFMain() {
         initComponents();
@@ -18,6 +21,7 @@ public class JFMain extends javax.swing.JFrame {
         this.jfClasificarGasto = new JFClasificarGasto();
         this.jfVerSaldo = new JFVerSaldo();
         this.jfReporteDeGastoPorProyecto = new JFReporteDeGastoPorProyecto();
+        this.jfReporteDeGastoPorAuditor = new JFReporteDeGastoPorAuditor();
         
     }
 
@@ -33,6 +37,7 @@ public class JFMain extends javax.swing.JFrame {
         btnClasificarGasto = new javax.swing.JButton();
         btnVerSaldo = new javax.swing.JButton();
         btnReporteGastoProyecto = new javax.swing.JButton();
+        btnReporteGastoProyecto1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -57,16 +62,25 @@ public class JFMain extends javax.swing.JFrame {
             }
         });
 
+        btnReporteGastoProyecto1.setText("Reporte De Gasto Por Auditor");
+        btnReporteGastoProyecto1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReporteGastoProyecto1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(237, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnClasificarGasto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnVerSaldo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnReporteGastoProyecto))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnReporteGastoProyecto1)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(btnClasificarGasto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnVerSaldo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnReporteGastoProyecto)))
                 .addGap(223, 223, 223))
         );
         layout.setVerticalGroup(
@@ -78,7 +92,9 @@ public class JFMain extends javax.swing.JFrame {
                 .addComponent(btnVerSaldo)
                 .addGap(33, 33, 33)
                 .addComponent(btnReporteGastoProyecto)
-                .addContainerGap(201, Short.MAX_VALUE))
+                .addGap(29, 29, 29)
+                .addComponent(btnReporteGastoProyecto1)
+                .addContainerGap(149, Short.MAX_VALUE))
         );
 
         pack();
@@ -96,6 +112,10 @@ public class JFMain extends javax.swing.JFrame {
         jfReporteDeGastoPorProyecto.setVisible(true);
         
     }//GEN-LAST:event_btnReporteGastoProyectoActionPerformed
+
+    private void btnReporteGastoProyecto1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteGastoProyecto1ActionPerformed
+        jfReporteDeGastoPorAuditor.setVisible(true);
+    }//GEN-LAST:event_btnReporteGastoProyecto1ActionPerformed
     
     /**
      * @param args the command line arguments
@@ -135,6 +155,7 @@ public class JFMain extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClasificarGasto;
     private javax.swing.JButton btnReporteGastoProyecto;
+    private javax.swing.JButton btnReporteGastoProyecto1;
     private javax.swing.JButton btnVerSaldo;
     // End of variables declaration//GEN-END:variables
 }
