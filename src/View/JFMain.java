@@ -4,6 +4,7 @@ package View;
 import Model.Conexion;
 import View.GastoCategoria.JFClasificarGasto;
 import View.ReporteDeGasto.JFReporteDeGastoPorProyecto;
+import View.SubirComprobante.JFSubirComprobante;
 import View.VerSaldo.JFVerSaldo;
 
 public class JFMain extends javax.swing.JFrame {
@@ -11,6 +12,7 @@ public class JFMain extends javax.swing.JFrame {
     private JFClasificarGasto jfClasificarGasto;
     private JFVerSaldo jfVerSaldo;
     private JFReporteDeGastoPorProyecto jfReporteDeGastoPorProyecto;
+    private JFSubirComprobante jfSubirComprobante;
     
     public JFMain() {
         initComponents();
@@ -18,6 +20,8 @@ public class JFMain extends javax.swing.JFrame {
         this.jfClasificarGasto = new JFClasificarGasto();
         this.jfVerSaldo = new JFVerSaldo();
         this.jfReporteDeGastoPorProyecto = new JFReporteDeGastoPorProyecto();
+        this.jfSubirComprobante = new JFSubirComprobante();
+        
         
     }
 
@@ -33,6 +37,7 @@ public class JFMain extends javax.swing.JFrame {
         btnClasificarGasto = new javax.swing.JButton();
         btnVerSaldo = new javax.swing.JButton();
         btnReporteGastoProyecto = new javax.swing.JButton();
+        btnSubirComprobante = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -57,6 +62,13 @@ public class JFMain extends javax.swing.JFrame {
             }
         });
 
+        btnSubirComprobante.setText("Subir comprobante");
+        btnSubirComprobante.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSubirComprobanteActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -66,7 +78,8 @@ public class JFMain extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnClasificarGasto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnVerSaldo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnReporteGastoProyecto))
+                    .addComponent(btnReporteGastoProyecto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnSubirComprobante, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(223, 223, 223))
         );
         layout.setVerticalGroup(
@@ -76,9 +89,11 @@ public class JFMain extends javax.swing.JFrame {
                 .addComponent(btnClasificarGasto)
                 .addGap(32, 32, 32)
                 .addComponent(btnVerSaldo)
-                .addGap(33, 33, 33)
+                .addGap(18, 18, 18)
                 .addComponent(btnReporteGastoProyecto)
-                .addContainerGap(201, Short.MAX_VALUE))
+                .addGap(33, 33, 33)
+                .addComponent(btnSubirComprobante)
+                .addContainerGap(160, Short.MAX_VALUE))
         );
 
         pack();
@@ -96,6 +111,10 @@ public class JFMain extends javax.swing.JFrame {
         jfReporteDeGastoPorProyecto.setVisible(true);
         
     }//GEN-LAST:event_btnReporteGastoProyectoActionPerformed
+
+    private void btnSubirComprobanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubirComprobanteActionPerformed
+        jfSubirComprobante.setVisible(true);
+    }//GEN-LAST:event_btnSubirComprobanteActionPerformed
     
     /**
      * @param args the command line arguments
@@ -135,6 +154,7 @@ public class JFMain extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClasificarGasto;
     private javax.swing.JButton btnReporteGastoProyecto;
+    private javax.swing.JButton btnSubirComprobante;
     private javax.swing.JButton btnVerSaldo;
     // End of variables declaration//GEN-END:variables
 }

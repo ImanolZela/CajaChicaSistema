@@ -28,7 +28,8 @@
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="btnClasificarGasto" max="32767" attributes="0"/>
                   <Component id="btnVerSaldo" max="32767" attributes="0"/>
-                  <Component id="btnReporteGastoProyecto" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnReporteGastoProyecto" alignment="0" max="32767" attributes="0"/>
+                  <Component id="btnSubirComprobante" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="223" max="-2" attributes="0"/>
           </Group>
@@ -41,9 +42,11 @@
               <Component id="btnClasificarGasto" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
               <Component id="btnVerSaldo" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="btnReporteGastoProyecto" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="201" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+              <Component id="btnSubirComprobante" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="160" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -71,6 +74,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnReporteGastoProyectoActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnSubirComprobante">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Subir comprobante"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSubirComprobanteActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

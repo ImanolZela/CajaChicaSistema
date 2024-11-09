@@ -1,31 +1,40 @@
 
 package View.GastoCategoria;
 
+import Controller.GastoCategoria.AprobarRendicion;
 import Controller.GastoCategoria.GastoController;
 import Controller.GastoCategoria.ReporteGastosPDF;
 import Model.Rendicion_Gastos;
 import java.io.File;
 import java.util.List;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.table.DefaultTableModel;;
 
 public class JFClasificarGasto extends javax.swing.JFrame {
 
-        GastoController gastoController = new GastoController(); 
+     private GastoController gastoController;
+     private AprobarRendicion aprobarRendicionController;
      private DefaultTableModel modeloTabla;
      private List<Rendicion_Gastos> listaFiltradaActual; 
+     
     
     public JFClasificarGasto() {
-        initComponents();
+        this.gastoController = new GastoController();
+        this.aprobarRendicionController = new AprobarRendicion();
         
-        modeloTabla = new DefaultTableModel(new Object[]{"ID", "Descripción", "Monto", "Fecha", "Categoría"}, 0);
+        initComponents();
+           
+        modeloTabla = new DefaultTableModel(new Object[]{"ID", "Descripción", "Monto", "Fecha", "Categoría", "Estado"}, 0);
         cargarDatosTabla.setModel(modeloTabla);
         cargarDatosTabla(gastoController.obtenerTodosLosGastos());
         cbSeleccionCategoria.setEnabled(false);
         btnRestarOrden.setEnabled(false);
-    }
-    
-    
 
+        cbSeleccionCategoria.setEnabled(false);
+        btnRestarOrden.setEnabled(false);
+        
+        btnAprobarRendicion.addActionListener(evt -> aprobarRendicionSeleccionada());
+    
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -42,6 +51,7 @@ public class JFClasificarGasto extends javax.swing.JFrame {
         cbSeleccionCategoria = new javax.swing.JComboBox<>();
         btnGenerarReporte = new javax.swing.JButton();
         btnRestarOrden = new javax.swing.JButton();
+        btnAprobarRendicion = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -88,15 +98,15 @@ public class JFClasificarGasto extends javax.swing.JFrame {
             }
         });
 
+        btnAprobarRendicion.setText("Aprobar Rendicion");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(59, 59, 59)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnGenerarReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 750, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(cbSeleccionCategoria, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -104,7 +114,12 @@ public class JFClasificarGasto extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnFiltro)
                         .addGap(18, 18, 18)
-                        .addComponent(btnRestarOrden)))
+                        .addComponent(btnRestarOrden)
+                        .addGap(205, 205, 205)
+                        .addComponent(btnAprobarRendicion, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(btnGenerarReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 750, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(62, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -116,7 +131,8 @@ public class JFClasificarGasto extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbSeleccionCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnFiltro)
-                    .addComponent(btnRestarOrden))
+                    .addComponent(btnRestarOrden)
+                    .addComponent(btnAprobarRendicion))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -135,10 +151,50 @@ public class JFClasificarGasto extends javax.swing.JFrame {
                     gasto.getDescripcion_gasto(),
                     gasto.getMonto(),
                     gasto.getFecha_gasto(),
-                    gasto.getCategoria_id()
+                    gasto.getCategoria_id(),
+                    gasto.getEstado()
             });
         }
     }
+    
+    private void aprobarRendicionSeleccionada() {
+        int filaSeleccionada = cargarDatosTabla.getSelectedRow();
+        
+        if (filaSeleccionada == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "Por favor, seleccione una rendición de la tabla.", 
+                "Rendición no seleccionada", 
+                javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        int rendicionId = (int) modeloTabla.getValueAt(filaSeleccionada, 0); 
+        String estadoActual = (String) modeloTabla.getValueAt(filaSeleccionada, 5);
+
+        if ("Aprobado".equals(estadoActual)) {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "La rendición ya está aprobada.", 
+                "Rendición ya aprobada", 
+                javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        boolean exito = aprobarRendicionController.aprobarRendicion(rendicionId);
+        
+        if (exito) {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "La rendición ha sido aprobada exitosamente.", 
+                "Aprobación exitosa", 
+                javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            modeloTabla.setValueAt("Aprobado", filaSeleccionada, 5);
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "Error al aprobar la rendición.", 
+                "Error", 
+                javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
     private void cbFiltroCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFiltroCategoriaActionPerformed
 
         if ("Categoria".equals(cbFiltroCategoria.getSelectedItem().toString())) {
@@ -271,6 +327,7 @@ public class JFClasificarGasto extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAprobarRendicion;
     private javax.swing.JButton btnFiltro;
     private javax.swing.JButton btnGenerarReporte;
     private javax.swing.JButton btnRestarOrden;

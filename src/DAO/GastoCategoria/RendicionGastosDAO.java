@@ -31,7 +31,8 @@ public class RendicionGastosDAO {
                         rs.getString("descripcion_gasto"),
                         rs.getDouble("monto"),
                         parseDate(rs.getString("fecha_gasto")),
-                        rs.getInt("usuario_id")
+                        rs.getInt("usuario_id"),
+                        rs.getString("estado")
                 );
                 listaGastos.add(gasto);
             }
@@ -70,7 +71,8 @@ public class RendicionGastosDAO {
                             rs.getString("descripcion_gasto"),
                             rs.getDouble("monto"),
                             parseDate(rs.getString("fecha_gasto")),
-                            rs.getInt("usuario_id")
+                            rs.getInt("usuario_id"),
+                            rs.getString("estado")
                     );
                     listaGastos.add(gasto);
                 }

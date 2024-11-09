@@ -13,8 +13,9 @@ public class Rendicion_Gastos {
     private double monto;
     private Date fecha_gasto;
     private int usuario_id;
+    private String estado;
 
-    public Rendicion_Gastos(int rendicion_id, int caja_id, int categoria_id, String tipo_comprobante, String num_comprobante, String descripcion_gasto, double monto, Date fecha_gasto, int usuario_id) {
+    public Rendicion_Gastos(int rendicion_id, int caja_id, int categoria_id, String tipo_comprobante, String num_comprobante, String descripcion_gasto, double monto, Date fecha_gasto, int usuario_id, String estado) {
         this.rendicion_id = rendicion_id;
         this.caja_id = caja_id;
         this.categoria_id = categoria_id;
@@ -24,14 +25,11 @@ public class Rendicion_Gastos {
         this.monto = monto;
         this.fecha_gasto = fecha_gasto;
         this.usuario_id = usuario_id;
+        this.estado = estado;
     }
 
-    public int getRendicion_id() {
+     public int getRendicion_id() {
         return rendicion_id;
-    }
-
-    public void setRendicion_id(int rendicion_id) {
-        this.rendicion_id = rendicion_id;
     }
 
     public int getCaja_id() {
@@ -97,6 +95,16 @@ public class Rendicion_Gastos {
     public void setUsuario_id(int usuario_id) {
         this.usuario_id = usuario_id;
     }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+   
     
     @Override
     public String toString() {
@@ -110,6 +118,7 @@ public class Rendicion_Gastos {
                 ", monto=" + monto +
                 ", fecha_gasto=" + fecha_gasto +
                 ", usuario_id=" + usuario_id +
+                ", estado='" + estado + '\'' +
                 '}';
     }
 }
