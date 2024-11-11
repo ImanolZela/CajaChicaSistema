@@ -3,6 +3,7 @@ package View;
 
 import Model.Conexion;
 import View.GastoCategoria.JFClasificarGasto;
+import View.ReporteDeGasto.JFReporteDeGastoPorAuditor;
 import View.ReporteDeGasto.JFReporteDeGastoPorProyecto;
 import View.SubirComprobante.JFSubirComprobante;
 import View.VerSaldo.JFVerSaldo;

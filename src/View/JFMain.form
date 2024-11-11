@@ -25,11 +25,21 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace pref="237" max="32767" attributes="0"/>
+<<<<<<< HEAD
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="btnClasificarGasto" max="32767" attributes="0"/>
                   <Component id="btnVerSaldo" max="32767" attributes="0"/>
                   <Component id="btnReporteGastoProyecto" alignment="0" max="32767" attributes="0"/>
                   <Component id="btnSubirComprobante" max="32767" attributes="0"/>
+=======
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="btnReporteGastoProyecto1" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="btnClasificarGasto" max="32767" attributes="0"/>
+                      <Component id="btnVerSaldo" max="32767" attributes="0"/>
+                      <Component id="btnReporteGastoProyecto" alignment="0" min="-2" max="-2" attributes="0"/>
+                  </Group>
+>>>>>>> Dylan
               </Group>
               <EmptySpace min="-2" pref="223" max="-2" attributes="0"/>
           </Group>
@@ -44,9 +54,15 @@
               <Component id="btnVerSaldo" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="btnReporteGastoProyecto" min="-2" max="-2" attributes="0"/>
+<<<<<<< HEAD
               <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
               <Component id="btnSubirComprobante" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="160" max="32767" attributes="0"/>
+=======
+              <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+              <Component id="btnReporteGastoProyecto1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="149" max="32767" attributes="0"/>
+>>>>>>> Dylan
           </Group>
       </Group>
     </DimensionLayout>
@@ -76,12 +92,21 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnReporteGastoProyectoActionPerformed"/>
       </Events>
     </Component>
+<<<<<<< HEAD
     <Component class="javax.swing.JButton" name="btnSubirComprobante">
       <Properties>
         <Property name="text" type="java.lang.String" value="Subir comprobante"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSubirComprobanteActionPerformed"/>
+=======
+    <Component class="javax.swing.JButton" name="btnReporteGastoProyecto1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Reporte De Gasto Por Auditor"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnReporteGastoProyecto1ActionPerformed"/>
+>>>>>>> Dylan
       </Events>
     </Component>
   </SubComponents>
