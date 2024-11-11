@@ -3,7 +3,6 @@ package View;
 
 import Model.Conexion;
 import View.GastoCategoria.JFClasificarGasto;
-import View.ReporteDeGasto.JFReporteDeGastoPorAuditor;
 import View.ReporteDeGasto.JFReporteDeGastoPorProyecto;
 import View.SubirComprobante.JFSubirComprobante;
 import View.VerSaldo.JFVerSaldo;
@@ -17,6 +16,7 @@ public class JFMain extends javax.swing.JFrame {
     
     public JFMain() {
         initComponents();
+        setLocationRelativeTo(null);
         Conexion.conectar();
         this.jfClasificarGasto = new JFClasificarGasto();
         this.jfVerSaldo = new JFVerSaldo();
@@ -90,11 +90,11 @@ public class JFMain extends javax.swing.JFrame {
                 .addComponent(btnClasificarGasto)
                 .addGap(32, 32, 32)
                 .addComponent(btnVerSaldo)
-                .addGap(18, 18, 18)
+                .addGap(32, 32, 32)
                 .addComponent(btnReporteGastoProyecto)
-                .addGap(33, 33, 33)
+                .addGap(31, 31, 31)
                 .addComponent(btnSubirComprobante)
-                .addContainerGap(160, Short.MAX_VALUE))
+                .addContainerGap(148, Short.MAX_VALUE))
         );
 
         pack();

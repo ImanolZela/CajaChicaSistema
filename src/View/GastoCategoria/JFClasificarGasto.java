@@ -7,6 +7,7 @@ import Controller.GastoCategoria.ReporteGastosPDF;
 import Model.Rendicion_Gastos;
 import java.io.File;
 import java.util.List;
+import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;;
 
 public class JFClasificarGasto extends javax.swing.JFrame {
@@ -18,11 +19,14 @@ public class JFClasificarGasto extends javax.swing.JFrame {
      
     
     public JFClasificarGasto() {
+        initComponents();
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
+
         this.gastoController = new GastoController();
         this.aprobarRendicionController = new AprobarRendicion();
         
-        initComponents();
-           
+        
         modeloTabla = new DefaultTableModel(new Object[]{"ID", "Descripción", "Monto", "Fecha", "Categoría", "Estado"}, 0);
         cargarDatosTabla.setModel(modeloTabla);
         cargarDatosTabla(gastoController.obtenerTodosLosGastos());

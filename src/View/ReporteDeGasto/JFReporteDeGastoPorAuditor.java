@@ -5,6 +5,7 @@ package View.ReporteDeGasto;
 import Controller.ReporteDeGasto.ReporteDeGastoPorAuditorController;
 
 import Controller.VerSaldo.VerSaldoController;
+import javax.swing.JFrame;
 
 public class JFReporteDeGastoPorAuditor extends javax.swing.JFrame {
     ReporteDeGastoPorAuditorController gastoController = new ReporteDeGastoPorAuditorController();
@@ -12,6 +13,9 @@ public class JFReporteDeGastoPorAuditor extends javax.swing.JFrame {
     public JFReporteDeGastoPorAuditor() {
         
         initComponents();
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
+
         ReporteDeGastoPorAuditorController.cargarAuditoresEnCB(cbProyectos);
         ReporteDeGastoPorAuditorController.cargarOpcionesEnCB(cbOperacion);
         

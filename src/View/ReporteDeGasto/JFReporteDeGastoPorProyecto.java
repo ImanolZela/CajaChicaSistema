@@ -5,13 +5,16 @@ package View.ReporteDeGasto;
 import Controller.ReporteDeGasto.ReporteDeGastoPorProyectoController;
 
 import Controller.VerSaldo.VerSaldoController;
+import javax.swing.JFrame;
 
 public class JFReporteDeGastoPorProyecto extends javax.swing.JFrame {
     ReporteDeGastoPorProyectoController gastoController = new ReporteDeGastoPorProyectoController();
     
     public JFReporteDeGastoPorProyecto() {
-        
         initComponents();
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
+
         ReporteDeGastoPorProyectoController.cargarProyectosInCB(cbProyectos);
         
         
