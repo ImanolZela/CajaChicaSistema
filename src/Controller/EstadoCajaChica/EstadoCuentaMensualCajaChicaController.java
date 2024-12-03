@@ -1,6 +1,7 @@
 package Controller.EstadoCajaChica;
 
-import DAO.EstadoCUentaMensual.EstadoCUentaMensualCajaChicaDAO;
+
+import DAO.EstadoCajaChica.EstadoCuentaMensualCajaChicaDAO;
 import Model.Conexion;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
@@ -15,7 +16,7 @@ public class EstadoCuentaMensualCajaChicaController {
     public static void cargarProyectosActivos(JComboBox<String> cbProyecto) {
         cbProyecto.removeAllItems();
         Connection conn = Conexion.conectar();
-        EstadoCUentaMensualCajaChicaDAO dao = new EstadoCUentaMensualCajaChicaDAO();
+        EstadoCuentaMensualCajaChicaDAO dao = new EstadoCuentaMensualCajaChicaDAO();
         List<String> proyectos = dao.obtenerProyectosActivos(conn);
 
         if (proyectos.isEmpty()) {
@@ -44,7 +45,7 @@ public class EstadoCuentaMensualCajaChicaController {
             return;
         }
 
-        EstadoCUentaMensualCajaChicaDAO dao = new EstadoCUentaMensualCajaChicaDAO();
+        EstadoCuentaMensualCajaChicaDAO dao = new EstadoCuentaMensualCajaChicaDAO();
         List<String> aniosMeses = dao.obtenerRangoDeAniosYMeses(conn, nombreProyecto);
 
         if (aniosMeses.isEmpty()) {
@@ -82,7 +83,7 @@ public class EstadoCuentaMensualCajaChicaController {
             return;
         }
 
-        EstadoCUentaMensualCajaChicaDAO dao = new EstadoCUentaMensualCajaChicaDAO();
+        EstadoCuentaMensualCajaChicaDAO dao = new EstadoCuentaMensualCajaChicaDAO();
         List<String> aniosMeses = dao.obtenerRangoDeAniosYMeses(conn, nombreProyecto);
 
         if (aniosMeses.isEmpty()) {
@@ -141,7 +142,7 @@ public class EstadoCuentaMensualCajaChicaController {
         Connection conn = Conexion.conectar();
 
         // Crear una instancia del DAO
-        EstadoCUentaMensualCajaChicaDAO dao = new EstadoCUentaMensualCajaChicaDAO();
+        EstadoCuentaMensualCajaChicaDAO dao = new EstadoCuentaMensualCajaChicaDAO();
 
         // Concatenar el año y mes en el formato necesario (YYYY-MM)
         String anioMes = anioSeleccionado + "-" + mesSeleccionado.split("-")[0];
@@ -183,7 +184,7 @@ public class EstadoCuentaMensualCajaChicaController {
         Connection conn = Conexion.conectar();
 
         // Crear una instancia del DAO
-        EstadoCUentaMensualCajaChicaDAO dao = new EstadoCUentaMensualCajaChicaDAO();
+        EstadoCuentaMensualCajaChicaDAO dao = new EstadoCuentaMensualCajaChicaDAO();
 
         // Concatenar el año y mes en el formato necesario (YYYY-MM)
         String anioMes = anioSeleccionado + "-" + mesSeleccionado.split("-")[0];

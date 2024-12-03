@@ -76,7 +76,7 @@ public class JFEstadoCuentaMensualCajaChica extends javax.swing.JFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Fecha", "Id Trabajador", "Nombre Apellido", "Tipo movimiento", "Monto"
+                "Fecha", "Nombre Proyecto", "Nombre Apellido", "Tipo movimiento", "Monto"
             }
         ) {
             boolean[] canEdit = new boolean [] {
