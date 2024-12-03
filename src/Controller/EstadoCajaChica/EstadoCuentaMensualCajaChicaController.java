@@ -19,7 +19,10 @@ public class EstadoCuentaMensualCajaChicaController {
         List<String> proyectos = dao.obtenerProyectosActivos(conn);
 
         if (proyectos.isEmpty()) {
-            System.out.println("cargarProyectosActivos: No se encontraron proyectos activos.");
+            javax.swing.JOptionPane.showMessageDialog(null,
+                    "El proyecto no tiene movimientos registrados",
+                    "Creación de PDF abortada",
+                    javax.swing.JOptionPane.INFORMATION_MESSAGE);
         } else {
             for (String proyecto : proyectos) {
                 cbProyecto.addItem(proyecto);
@@ -28,13 +31,16 @@ public class EstadoCuentaMensualCajaChicaController {
         }
     }
 
-    public static void cargarAnios(JComboBox<String> cbAnio, JComboBox<String> cbProyecto) {
+    public static void cargarAnios(JComboBox<String> cbAnio, JComboBox<String> cbProyecto, JTable tablaMovimientos) {
         cbAnio.removeAllItems();
         Connection conn = Conexion.conectar();
         String nombreProyecto = (String) cbProyecto.getSelectedItem();
 
         if (nombreProyecto == null) {
-            System.out.println("cargarAnios: No hay proyecto seleccionado.");
+            javax.swing.JOptionPane.showMessageDialog(null,
+                    "No hay proyecto seleccionado.","",
+                    javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            System.out.println("cargarAnios: ");
             return;
         }
 
@@ -42,7 +48,15 @@ public class EstadoCuentaMensualCajaChicaController {
         List<String> aniosMeses = dao.obtenerRangoDeAniosYMeses(conn, nombreProyecto);
 
         if (aniosMeses.isEmpty()) {
-            System.out.println("cargarAnios: No se encontraron movimientos para el proyecto seleccionado.");
+             // Obtener el modelo de la tabla
+            DefaultTableModel modelo = (DefaultTableModel) tablaMovimientos.getModel();
+
+            // Limpiar la tabla antes de cargar nuevos datos
+            modelo.setRowCount(0);
+            javax.swing.JOptionPane.showMessageDialog(null,
+                    "No se encontraron movimientos para el proyecto seleccionado.","",
+                    javax.swing.JOptionPane.INFORMATION_MESSAGE);
+
         } else {
             List<String> listaAnios = new ArrayList<>();
             for (String anioMes : aniosMeses) {
@@ -65,7 +79,6 @@ public class EstadoCuentaMensualCajaChicaController {
         String anioSeleccionado = (String) cbAnio.getSelectedItem();
 
         if (nombreProyecto == null || anioSeleccionado == null) {
-            System.out.println("cargarMeses: No hay proyecto o año seleccionado.");
             return;
         }
 
@@ -73,7 +86,6 @@ public class EstadoCuentaMensualCajaChicaController {
         List<String> aniosMeses = dao.obtenerRangoDeAniosYMeses(conn, nombreProyecto);
 
         if (aniosMeses.isEmpty()) {
-            System.out.println("cargarMeses: No se encontraron movimientos para el proyecto y año seleccionados.");
         } else {
             for (String anioMes : aniosMeses) {
                 String[] parts = anioMes.split("-");
@@ -90,22 +102,19 @@ public class EstadoCuentaMensualCajaChicaController {
     }
 
     // Recargar los años al seleccionar un proyecto
-    public static void recargarAnios(JComboBox<String> cbAnio, JComboBox<String> cbProyecto) {
+    public static void recargarAnios(JComboBox<String> cbAnio, JComboBox<String> cbProyecto, JTable tablaMovimientos) {
         if (cbProyecto.getSelectedItem() == null) {
-            System.out.println("recargarAnios: No hay proyecto seleccionado para recargar.");
             return;
         }
 
-        cargarAnios(cbAnio, cbProyecto);
+        cargarAnios(cbAnio, cbProyecto, tablaMovimientos);
     }
 
     // Recargar los meses al seleccionar un año
     public static void recargarMeses(JComboBox<String> cbMes, JComboBox<String> cbAnio, JComboBox<String> cbProyecto) {
         if (cbAnio.getSelectedItem() == null || cbProyecto.getSelectedItem() == null) {
-            System.out.println("recargarMeses: No hay proyecto o año seleccionado para recargar.");
             return;
         }
-        System.out.println("recargarMeses: ejecuntando carga de meses");
         cargarMeses(cbMes, cbAnio, cbProyecto);
     }
 
@@ -118,7 +127,6 @@ public class EstadoCuentaMensualCajaChicaController {
 
     // Mostrar los movimientos de la caja chica en el JTable
     public static void mostrarMovimientos(JComboBox<String> cbProyecto, JComboBox<String> cbAnio, JComboBox<String> cbMes, JTable tablaMovimientos) {
-        System.out.println("mostrarMovimientos:");
         // Verificar si los combo boxes tienen un valor seleccionado
         String nombreProyecto = (String) cbProyecto.getSelectedItem();
         String anioSeleccionado = (String) cbAnio.getSelectedItem();
@@ -126,18 +134,17 @@ public class EstadoCuentaMensualCajaChicaController {
 
         // Validar que todos los campos estén seleccionados
         if (nombreProyecto == null || anioSeleccionado == null || mesSeleccionado == null) {
-            System.out.println("Debe seleccionar un proyecto, año y mes.");
             return; // Salir del método si falta selección
         }
-
-        // Concatenar el año y mes en el formato necesario (YYYY-MM)
-        String anioMes = anioSeleccionado + "-" + mesSeleccionado.split("-")[0];
 
         // Establecer la conexión a la base de datos
         Connection conn = Conexion.conectar();
 
         // Crear una instancia del DAO
         EstadoCUentaMensualCajaChicaDAO dao = new EstadoCUentaMensualCajaChicaDAO();
+
+        // Concatenar el año y mes en el formato necesario (YYYY-MM)
+        String anioMes = anioSeleccionado + "-" + mesSeleccionado.split("-")[0];
 
         // Obtener los movimientos de la caja chica para el proyecto, año y mes seleccionados
         List<String> movimientos = dao.obtenerMovimientosCajaChica(conn, nombreProyecto, anioMes);
@@ -154,4 +161,44 @@ public class EstadoCuentaMensualCajaChicaController {
             modelo.addRow(partes);
         }
     }
+    
+    
+    public static void generarReportePDF(JComboBox<String> cbProyecto, JComboBox<String> cbAnio, JComboBox<String> cbMes) {
+
+        // Verificar si los combo boxes tienen un valor seleccionado
+        String nombreProyecto = (String) cbProyecto.getSelectedItem();
+        String anioSeleccionado = (String) cbAnio.getSelectedItem();
+        String mesSeleccionado = (String) cbMes.getSelectedItem();
+
+        // Validar que todos los campos estén seleccionados
+        if (anioSeleccionado == null || mesSeleccionado == null) {
+            javax.swing.JOptionPane.showMessageDialog(null,
+                    "El proyecto no tiene movimientos registrados",
+                    "Creación de PDF abortada",
+                    javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            return; // Salir del método si falta selección
+        }
+
+        // Establecer la conexión a la base de datos
+        Connection conn = Conexion.conectar();
+
+        // Crear una instancia del DAO
+        EstadoCUentaMensualCajaChicaDAO dao = new EstadoCUentaMensualCajaChicaDAO();
+
+        // Concatenar el año y mes en el formato necesario (YYYY-MM)
+        String anioMes = anioSeleccionado + "-" + mesSeleccionado.split("-")[0];
+
+        // Obtener los movimientos de la caja chica para el proyecto, año y mes seleccionados
+        List<String> movimientos = dao.obtenerMovimientosCajaChica(conn, nombreProyecto, anioMes);
+
+        // Invocar la generación del reporte con los movimientos obtenidos
+        EstadoCuentaMensualGenerarReportePDF.generarReporte(movimientos);
+        
+        javax.swing.JOptionPane.showMessageDialog(null,
+                    "El PDF fué creado con exito",
+                    "Listo",
+                    javax.swing.JOptionPane.PLAIN_MESSAGE);
+
+    }
+
 }

@@ -3,6 +3,7 @@ package View.EstadoCuentaMensualCajaChica;
 
 
 import Controller.EstadoCajaChica.EstadoCuentaMensualCajaChicaController;
+import Controller.EstadoCajaChica.EstadoCuentaMensualGenerarReportePDF;
 import javax.swing.JFrame;
 
 public class JFEstadoCuentaMensualCajaChica extends javax.swing.JFrame {
@@ -14,9 +15,9 @@ public class JFEstadoCuentaMensualCajaChica extends javax.swing.JFrame {
         
         
         EstadoCuentaMensualCajaChicaController.cargarProyectosActivos(cbProyectos);
-        EstadoCuentaMensualCajaChicaController.cargarAnios(cbAnio, cbProyectos);
+        EstadoCuentaMensualCajaChicaController.cargarAnios(cbAnio, cbProyectos, jTable1);
         EstadoCuentaMensualCajaChicaController.cargarMeses(cbMes, cbAnio, cbProyectos);
-        cbProyectos.setSelectedIndex(2);
+        cbProyectos.setSelectedIndex(0);
     }
     
     
@@ -33,6 +34,7 @@ public class JFEstadoCuentaMensualCajaChica extends javax.swing.JFrame {
         cbAnio = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        btnGenerarReporte = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -45,6 +47,7 @@ public class JFEstadoCuentaMensualCajaChica extends javax.swing.JFrame {
 
         jLabel1.setText("Nombre Auditor");
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel2.setText("Reporte Caja Chica");
 
         jLabel4.setText("Año");
@@ -67,33 +70,41 @@ public class JFEstadoCuentaMensualCajaChica extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Fecha", "Id Trabajador", "Nombre Apellido", "Tipo movimiento", "Monto"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
+
+        btnGenerarReporte.setText("Generar Reporte");
+        btnGenerarReporte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGenerarReporteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(183, 183, 183)
-                .addComponent(jLabel2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(cbProyectos, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(cbProyectos, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -107,15 +118,22 @@ public class JFEstadoCuentaMensualCajaChica extends javax.swing.JFrame {
                         .addComponent(jLabel5)
                         .addGap(55, 55, 55))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 18, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(176, 176, 176))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnGenerarReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 553, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1))
+                        .addGap(20, 20, 20))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
@@ -128,14 +146,16 @@ public class JFEstadoCuentaMensualCajaChica extends javax.swing.JFrame {
                     .addComponent(cbAnio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btnGenerarReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
   
     private void cbProyectosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbProyectosActionPerformed
-        EstadoCuentaMensualCajaChicaController.recargarAnios(cbAnio, cbProyectos);
+        EstadoCuentaMensualCajaChicaController.recargarAnios(cbAnio, cbProyectos, jTable1);
         EstadoCuentaMensualCajaChicaController.cargarMeses(cbMes, cbAnio, cbProyectos);
         EstadoCuentaMensualCajaChicaController.mostrarMovimientos(cbProyectos, cbAnio, cbMes, jTable1);
         
@@ -150,6 +170,10 @@ public class JFEstadoCuentaMensualCajaChica extends javax.swing.JFrame {
         EstadoCuentaMensualCajaChicaController.cargarMeses(cbMes, cbAnio, cbProyectos);
         EstadoCuentaMensualCajaChicaController.mostrarMovimientos(cbProyectos, cbAnio, cbMes, jTable1);
     }//GEN-LAST:event_cbAnioActionPerformed
+
+    private void btnGenerarReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarReporteActionPerformed
+        EstadoCuentaMensualCajaChicaController.generarReportePDF(cbProyectos, cbAnio, cbMes);
+    }//GEN-LAST:event_btnGenerarReporteActionPerformed
 
     
     /**
@@ -251,6 +275,7 @@ public class JFEstadoCuentaMensualCajaChica extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnGenerarReporte;
     private javax.swing.JComboBox<String> cbAnio;
     private javax.swing.JComboBox<String> cbMes;
     private javax.swing.JComboBox<String> cbProyectos;
