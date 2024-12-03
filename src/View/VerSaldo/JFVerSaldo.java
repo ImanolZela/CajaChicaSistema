@@ -5,6 +5,7 @@
 package View.VerSaldo;
 import Controller.VerSaldo.VerSaldoController;
 import java.util.List;
+import javax.swing.JFrame;
 
 /**
  *
@@ -14,6 +15,8 @@ public class JFVerSaldo extends javax.swing.JFrame {
     
     public JFVerSaldo() {
         initComponents();
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
         
         VerSaldoController.cargarProyectosActivos(cbProyectos);
     }

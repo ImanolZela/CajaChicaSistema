@@ -7,6 +7,7 @@ public class Rendicion_Gastos {
     private int rendicion_id;
     private int caja_id;
     private int categoria_id;
+    private int tipo_comprobante_id;
     private String tipo_comprobante;
     private String num_comprobante;
     private String descripcion_gasto;
@@ -15,10 +16,11 @@ public class Rendicion_Gastos {
     private int usuario_id;
     private String estado;
 
-    public Rendicion_Gastos(int rendicion_id, int caja_id, int categoria_id, String tipo_comprobante, String num_comprobante, String descripcion_gasto, double monto, Date fecha_gasto, int usuario_id, String estado) {
+    public Rendicion_Gastos(int rendicion_id, int caja_id, int categoria_id, String tipo_comprobante, String num_comprobante, String descripcion_gasto, double monto, Date fecha_gasto, int tipo_comprobante_id, String estado) {
         this.rendicion_id = rendicion_id;
         this.caja_id = caja_id;
         this.categoria_id = categoria_id;
+        this.tipo_comprobante_id = tipo_comprobante_id;
         this.tipo_comprobante = tipo_comprobante;
         this.num_comprobante = num_comprobante;
         this.descripcion_gasto = descripcion_gasto;
@@ -28,8 +30,16 @@ public class Rendicion_Gastos {
         this.estado = estado;
     }
 
-     public int getRendicion_id() {
+    public Rendicion_Gastos() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public int getRendicion_id() {
         return rendicion_id;
+    }
+
+    public void setRendicion_id(int rendicion_id) {
+        this.rendicion_id = rendicion_id;
     }
 
     public int getCaja_id() {
@@ -46,6 +56,14 @@ public class Rendicion_Gastos {
 
     public void setCategoria_id(int categoria_id) {
         this.categoria_id = categoria_id;
+    }
+
+    public int getTipo_comprobante_id() {
+        return tipo_comprobante_id;
+    }
+
+    public void setTipo_comprobante_id(int tipo_comprobante_id) {
+        this.tipo_comprobante_id = tipo_comprobante_id;
     }
 
     public String getTipo_comprobante() {
@@ -104,6 +122,8 @@ public class Rendicion_Gastos {
         this.estado = estado;
     }
 
+   
+   
    
     
     @Override

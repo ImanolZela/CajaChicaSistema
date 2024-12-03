@@ -2,17 +2,20 @@
 package View.ReporteDeGasto;
 
 
-import Controller.ReporteDeGasto.ReporteDeGastoController;
+import Controller.ReporteDeGasto.ReporteDeGastoPorProyectoController;
 
 import Controller.VerSaldo.VerSaldoController;
+import javax.swing.JFrame;
 
 public class JFReporteDeGastoPorProyecto extends javax.swing.JFrame {
-    ReporteDeGastoController gastoController = new ReporteDeGastoController();
+    ReporteDeGastoPorProyectoController gastoController = new ReporteDeGastoPorProyectoController();
     
     public JFReporteDeGastoPorProyecto() {
-        
         initComponents();
-        ReporteDeGastoController.cargarProyectosInCB(cbProyectos);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
+
+        ReporteDeGastoPorProyectoController.cargarProyectosInCB(cbProyectos);
         
         
     }
@@ -24,10 +27,7 @@ public class JFReporteDeGastoPorProyecto extends javax.swing.JFrame {
 
         cbProyectos = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        taDescripcion = new javax.swing.JTextArea();
         tfGastoTotal = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -41,14 +41,7 @@ public class JFReporteDeGastoPorProyecto extends javax.swing.JFrame {
 
         jLabel1.setText("Nombre Proyecto");
 
-        jLabel2.setText("Descripción");
-
         jLabel3.setText("Gasto Total");
-
-        taDescripcion.setEditable(false);
-        taDescripcion.setColumns(20);
-        taDescripcion.setRows(5);
-        jScrollPane1.setViewportView(taDescripcion);
 
         tfGastoTotal.setEditable(false);
         tfGastoTotal.setText("GastoTotal");
@@ -61,12 +54,10 @@ public class JFReporteDeGastoPorProyecto extends javax.swing.JFrame {
                 .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel2))
+                    .addComponent(jLabel3))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)
-                    .addComponent(cbProyectos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cbProyectos, 0, 256, Short.MAX_VALUE)
                     .addComponent(tfGastoTotal))
                 .addContainerGap(41, Short.MAX_VALUE))
         );
@@ -81,11 +72,7 @@ public class JFReporteDeGastoPorProyecto extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(tfGastoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         pack();
@@ -93,7 +80,7 @@ public class JFReporteDeGastoPorProyecto extends javax.swing.JFrame {
   
     private void cbProyectosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbProyectosActionPerformed
         // Verifica si hay un elemento seleccionado en el ComboBox
-        ReporteDeGastoController.cargarDatosProyecto(cbProyectos, tfGastoTotal, taDescripcion);
+        ReporteDeGastoPorProyectoController.cargarDatosProyecto(cbProyectos, tfGastoTotal);
     }//GEN-LAST:event_cbProyectosActionPerformed
 
     
@@ -142,10 +129,7 @@ public class JFReporteDeGastoPorProyecto extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cbProyectos;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea taDescripcion;
     private javax.swing.JTextField tfGastoTotal;
     // End of variables declaration//GEN-END:variables
 }

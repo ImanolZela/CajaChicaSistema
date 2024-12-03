@@ -19,7 +19,8 @@ public class JFSubirComprobante extends javax.swing.JFrame {
         initComponents();
         setTitle("Subir Comprobante");
         setSize(400, 300);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
         setLayout(new FlowLayout());
 
         lblArchivoSeleccionado = new JLabel("Archivo no seleccionado");
@@ -72,7 +73,6 @@ public class JFSubirComprobante extends javax.swing.JFrame {
         });
         add(btnSubir);
         
-        setVisible(true);
     }
 
     @SuppressWarnings("unchecked")
