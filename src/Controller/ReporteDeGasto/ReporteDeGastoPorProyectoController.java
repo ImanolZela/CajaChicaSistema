@@ -1,20 +1,14 @@
 package Controller.ReporteDeGasto;
 
-
-import Controller.VerSaldo.VerSaldoController;
 import DAO.ReporteDeGasto.ReporteDeGastoProyectoDAO;
 import static DAO.ReporteDeGasto.ReporteDeGastoProyectoDAO.obtenerProyectos;
 import Model.Conexion;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JComboBox;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.table.DefaultTableModel;
+
 
 
 public class ReporteDeGastoPorProyectoController {
@@ -33,7 +27,7 @@ public class ReporteDeGastoPorProyectoController {
     }
     
     
-    public static void cargarDatosProyecto(JComboBox<String> cb, JTextField tfGastoTotal, JTextArea taDescripcion) {
+    public static void cargarDatosProyecto(JComboBox<String> cb, JTextField tfGastoTotal) {
         Connection conn = Conexion.conectar();
         ReporteDeGastoProyectoDAO dao = new ReporteDeGastoProyectoDAO();
         List<String> datos = new ArrayList<>();
@@ -49,7 +43,6 @@ public class ReporteDeGastoPorProyectoController {
             
             if (datos.size() >= 2) {
                 tfGastoTotal.setText(datos.get(1));
-                taDescripcion.setText(datos.get(2));
             } else {
                 System.out.println("La lista de datos no contiene suficientes elementos.");
             }

@@ -3,8 +3,6 @@ package View.ReporteDeGasto;
 
 
 import Controller.ReporteDeGasto.ReporteDeGastoPorAuditorController;
-
-import Controller.VerSaldo.VerSaldoController;
 import javax.swing.JFrame;
 
 public class JFReporteDeGastoPorAuditor extends javax.swing.JFrame {
