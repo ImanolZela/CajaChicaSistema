@@ -1,13 +1,16 @@
 package View;
 
+import View.CajaChica.MovimientosDeCajaChica.JFMovimientosDeCajaChica;
 import View.EstadoCuentaMensualCajaChica.JFEstadoCuentaMensualCajaChica;
 import View.GastoCategoria.JFClasificarGasto;
+import View.GastosPorComprobante.RegistrarGasto;
 import View.Registros.AprobacionGastos;
 import View.Registros.RecuperarContrasena;
 import View.Registros.RegistarUsuario;
 import View.Registros.RegistroCajaChica;
 import View.Registros.RegistroProyecto;
 import View.Registros.RegistroRendicionGastos;
+import View.ReporteDeGasto.JFReporteDeGastoPorAuditor;
 import View.ReporteDeGasto.JFReporteDeGastoPorProyecto;
 import View.SubirComprobante.JFSubirComprobante;
 import View.VerSaldo.JFVerSaldo;
@@ -38,20 +41,26 @@ public class Menu extends JFrame {
 	private AprobacionGastos reg_aprobacion_gastos;
         
         
-        // Imanol and Dylan
-        //Caja chica
-        private JFVerSaldo cajaChica_jFVerSAldo;
-        private JFEstadoCuentaMensualCajaChica cajaChhica;
+        //Dylan
+        private JFMovimientosDeCajaChica cajaChica_JFMovimientosDeCajaChica;
+        private JFEstadoCuentaMensualCajaChica cajaChica_JFEstadoCuentaMensualCajaChica;
+        private JFVerSaldo cajaChica_JFVerSaldo;
+        private JFReporteDeGastoPorAuditor reportes_JFReporteDeGastoPorAuditor;
+        private JFReporteDeGastoPorProyecto reportes_JFReporteDeGastoPorProyecto;
         
-        //Rendicion
-        private JFSubirComprobante jfSubirComprobante = new JFSubirComprobante();
-        
-        
-        //Reportes
-        private JFClasificarGasto reportes_jfClasificarGasto;
-        private JFReporteDeGastoPorProyecto reportes_jfReporteDeGastoPorProyecto;
-        private JFReporteDeGastoPorProyecto reportes_JFReporteDeGastoPorAuditor;
+        // Imanol
+        private JFClasificarGasto reportes_JFClasificarGasto; //4req
+        private RegistrarGasto rendicion_RegistrarGasto; //1req
+        private JFSubirComprobante rendicion_JFSubirComprobante; //1req
 
+                
+        
+        //CajaChica
+        //Rendicion
+        //Reportes
+        
+        
+        
 	/**
 	 * Create the frame.
 	 */
@@ -83,6 +92,7 @@ public class Menu extends JFrame {
 		mnSistema.add(mntmCerrar);
                 
                 
+                
                 //Menu Caja Chica
 		JMenu mnCajaChica = new JMenu("Caja Chica");
 		menuBar.add(mnCajaChica);
@@ -93,13 +103,17 @@ public class Menu extends JFrame {
 		JMenuItem mntmRegistroProyecto = new JMenuItem("Registrar Proyecto");
 		mnCajaChica.add(mntmRegistroProyecto);
                 
-                //Dylan req
-                JMenuItem mntmVerSaldo = new JMenuItem("Ver Saldo");
-		mnCajaChica.add(mntmVerSaldo);
+                //--------
+                JMenuItem mntmMovimientosDeCajaChica = new JMenuItem("Movimientos de Caja");
+		mnCajaChica.add(mntmMovimientosDeCajaChica);
 
                 JMenuItem mntmEstadoCuentaMensualCajaChica = new JMenuItem("Estado Cuenta Mensual");
 		mnCajaChica.add(mntmEstadoCuentaMensualCajaChica);
         
+                JMenuItem mntmVerSaldo = new JMenuItem("Verificar Saldo");
+		mnCajaChica.add(mntmVerSaldo);
+                
+                
                 
                 //Menu Rendición
 		JMenu mnRendirComprobantes = new JMenu("Rendicion");
@@ -111,23 +125,13 @@ public class Menu extends JFrame {
 		JMenuItem mntmAprobarRendiciones = new JMenuItem("Aprobar Rendiciones");
 		mnRendirComprobantes.add(mntmAprobarRendiciones);
                 //ImanolReq
+                JMenuItem mntmRegistrarGasto = new JMenuItem("Registrar Gasto");
+		mnRendirComprobantes.add(mntmRegistrarGasto);
+
                 JMenuItem mntmSubirComprobante = new JMenuItem("Subir Comprobante");
 		mnRendirComprobantes.add(mntmAprobarRendiciones);
 
                 
-/*
-        //Rendicion
-        private JFSubirComprobante jfSubirComprobante = new JFSubirComprobante();
-        
-        
-        //Reportes
-        private JFClasificarGasto reportes_jfClasificarGasto;
-        private JFReporteDeGastoPorProyecto reportes_jfReporteDeGastoPorProyecto;
-        private JFReporteDeGastoPorProyecto reportes_JFReporteDeGastoPorAuditor;
-mntmEstadoCuentaMensualCajaChica
-mntmAprobarRendiciones
-*/
-
         
                 //Menu Reporte
 		JMenu mnReportes = new JMenu("Reportes");
@@ -135,7 +139,21 @@ mntmAprobarRendiciones
 
 		JMenuItem mntmHistorialCajaChica = new JMenuItem("Historial Caja Chica");
 		mnReportes.add(mntmHistorialCajaChica);
-		contentPane = new JPanel();
+                
+                JMenuItem mntmReporteDeGastoPorAuditor = new JMenuItem("Reporte Gasto Auditor");
+		mnReportes.add(mntmReporteDeGastoPorAuditor);
+                
+                JMenuItem mntmReporteDeGastoPorProyecto = new JMenuItem("Reporte Gasto Proyecto");
+		mnReportes.add(mntmReporteDeGastoPorProyecto);
+                
+                JMenuItem mntmClasificarGasto = new JMenuItem("Clasificar Gasto");
+		mnReportes.add(mntmClasificarGasto);
+                
+                
+                
+                
+                //Declaración para las clases que utilizan, JinternalFrame
+                contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
@@ -233,14 +251,76 @@ mntmAprobarRendiciones
                 
                 
                 //Dylan and Imanol Code:
+                //cajaChica_JFMovimientosDeCajaChica;
+                //cajaChica_JFEstadoCuentaMensualCajaChica;
+                //cajaChica_JFVerSaldo;
+                //reportes_JFReporteDeGastoPorAuditor;
+                //reportes_JfReporteDeGastoPorProyecto;
+                //reportes_JFClasificarGasto;
+                //rendicion_RegistrarGasto;
+                //rendicion_JFSubirComprobante;
                 
-               mntmVerSaldo.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				cajaChica_jFVerSAldo = new JFVerSaldo();
-				cajaChica_jFVerSAldo.setVisible(true);
-			}
-		});
-                
+                mntmVerSaldo.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent arg0) {
+                        cajaChica_JFVerSaldo = new JFVerSaldo();
+                        cajaChica_JFVerSaldo.setVisible(true);
+                    }
+                });
 
+                mntmMovimientosDeCajaChica.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent arg0) {
+                        cajaChica_JFMovimientosDeCajaChica = new JFMovimientosDeCajaChica();
+                        cajaChica_JFMovimientosDeCajaChica.setVisible(true);
+                    }
+                });
+
+                mntmEstadoCuentaMensualCajaChica.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent arg0) {
+                        cajaChica_JFEstadoCuentaMensualCajaChica = new JFEstadoCuentaMensualCajaChica();
+                        cajaChica_JFEstadoCuentaMensualCajaChica.setVisible(true);
+                    }
+                });
+
+                mntmReporteDeGastoPorAuditor.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent arg0) {
+                        reportes_JFReporteDeGastoPorAuditor = new JFReporteDeGastoPorAuditor();
+                        reportes_JFReporteDeGastoPorAuditor.setVisible(true);
+                    }
+                });
+
+                mntmReporteDeGastoPorProyecto.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent arg0) {
+                        reportes_JFReporteDeGastoPorProyecto = new JFReporteDeGastoPorProyecto();
+                        reportes_JFReporteDeGastoPorProyecto.setVisible(true);
+                    }
+                });
+
+                mntmClasificarGasto.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent arg0) {
+                        reportes_JFClasificarGasto = new JFClasificarGasto();
+                        reportes_JFClasificarGasto.setVisible(true);
+                    }
+                });
+
+                mntmRegistrarGasto.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent arg0) {
+                        rendicion_RegistrarGasto = new RegistrarGasto();
+                        rendicion_RegistrarGasto.setVisible(true);
+                    }
+                });
+
+                mntmSubirComprobante.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent arg0) {
+                        rendicion_JFSubirComprobante = new JFSubirComprobante();
+                        rendicion_JFSubirComprobante.setVisible(true);
+                    }
+                });
+
+                
+                
+                
 	}
 }
+
+                
+                
