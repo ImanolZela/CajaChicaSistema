@@ -1,11 +1,11 @@
-package DAO.EstadoCUentaMensual;
+package DAO.EstadoCajaChica;
 
 import Model.Conexion;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EstadoCUentaMensualCajaChicaDAO {
+public class EstadoCuentaMensualCajaChicaDAO {
 
     // Obtener los proyectos activos
     public List<String> obtenerProyectosActivos(Connection con) {
