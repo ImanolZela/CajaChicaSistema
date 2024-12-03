@@ -111,7 +111,7 @@ public class ReporteDeGastoAuditorDAO {
             FROM 
                 Usuarios u
             JOIN 
-                Roles r ON u.rol_id = r.rol_id
+                Rol_Usuarios r ON u.rol_id = r.rol_id
             WHERE 
                 r.nombre_rol = 'Auditor';
         """;
