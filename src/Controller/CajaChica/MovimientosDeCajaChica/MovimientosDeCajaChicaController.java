@@ -133,6 +133,12 @@ public class MovimientosDeCajaChicaController {
 
                 // Llamar al método para generar el reporte en PDF
                 MovimientosDeCajaChicaGenerarPDF.generarReporte(movimientos);
+                
+                // Mensaje de retroalimentaci[on de PDF creado
+                javax.swing.JOptionPane.showMessageDialog(null,
+                            "El PDF fué creado con exito",
+                            "Listo",
+                            javax.swing.JOptionPane.PLAIN_MESSAGE);
             }
         } catch (NumberFormatException e) {
             javax.swing.JOptionPane.showMessageDialog(null,
@@ -140,9 +146,5 @@ public class MovimientosDeCajaChicaController {
                     "Ingresar Numeros Validos",
                     javax.swing.JOptionPane.INFORMATION_MESSAGE);
         }
-        javax.swing.JOptionPane.showMessageDialog(null,
-                    "El PDF fué creado con exito",
-                    "Listo",
-                    javax.swing.JOptionPane.PLAIN_MESSAGE);
     }
 }
